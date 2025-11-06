@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "deploy.fullName" . }}
+  name: {{ include "deploy.qualifier" . }}
   labels:
     {{- include "deploy.labels" . | nindent 4 }}
   {{- with .Values.pod.annotations }}
@@ -89,7 +89,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ include "deploy.fullName" . }}-pvc
+            claimName: {{ include "deploy.qualifier" . }}-pvc
       {{- end }}
       {{- with .Values.pod.nodeSelector }}
       nodeSelector:

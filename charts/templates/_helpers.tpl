@@ -9,9 +9,9 @@
 {{/*
 全称
 */}}
-{{- define "deploy.fullName" -}}
-	{{- if .Values.application.fullNameOverride }}
-		{{- .Values.application.fullNameOverride | trunc 63 | trimSuffix "-" }}
+{{- define "deploy.qualifier" -}}
+	{{- if .Values.application.qualifier }}
+		{{- .Values.application.qualifier | trunc 63 | trimSuffix "-" }}
 	{{- else }}
 		{{- $name := default .Chart.Name .Values.application.name }}
 		{{- if contains $name .Release.Name }}
@@ -58,7 +58,7 @@
 */}}
 {{- define "deploy.serviceAccountName" -}}
 	{{- if .Values.serviceAccount.create }}
-		{{- default (include "deploy.fullName" .) .Values.serviceAccount.name }}
+		{{- default (include "deploy.qualifier" .) .Values.serviceAccount.name }}
 	{{- else }}
 		{{- default "default" .Values.serviceAccount.name }}
 	{{- end }}
