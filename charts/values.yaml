@@ -1,6 +1,6 @@
 # 应用
 application:
-  name: "my-application"
+  name: "unset"
   fullNameOverride: ""
   namespace: "default"
   enabled: true
