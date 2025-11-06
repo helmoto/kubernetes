@@ -1,12 +1,13 @@
 {{/*
-Expand the name of the chart.
+名称
 */}}
 {{- define "deploy.name" -}}
 {{- default .Chart.Name .Values.application.name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+
 {{/*
-Create a default fully qualified app name.
+全称
 */}}
 {{- define "deploy.fullName" -}}
 {{- if .Values.application.fullNameOverride }}
@@ -21,15 +22,17 @@ Create a default fully qualified app name.
 {{- end }}
 {{- end }}
 
+
 {{/*
-Create chart name and version as used by the chart label.
+版本
 */}}
 {{- define "deploy.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+
 {{/*
-Common labels
+通用标签
 */}}
 {{- define "deploy.labels" -}}
 helm.sh/chart: {{ include "deploy.chart" . }}
@@ -40,16 +43,18 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+
 {{/*
-Selector labels
+选择器标签
 */}}
 {{- define "deploy.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "deploy.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+
 {{/*
-Service account name
+账号
 */}}
 {{- define "deploy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
