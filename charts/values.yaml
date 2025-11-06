@@ -1,15 +1,20 @@
+# 应用
 application:
   name: "my-application"
   fullNameOverride: ""
   namespace: "default"
   enabled: true
 
+
+# 镜像
 image:
   repository: "nginx"
   tag: "latest"
   policy: "IfNotPresent"
   secrets: []
 
+
+# 部署
 deployment:
   replicas: 1
   strategy:
@@ -19,6 +24,8 @@ deployment:
       maxUnavailable: 25%
   revisionHistoryLimit: 3
 
+
+# 容器
 container:
   name: "nginx"
   port: 80
@@ -53,8 +60,8 @@ container:
     initialDelaySeconds: 5
     periodSeconds: 5
     timeoutSeconds: 3
-
   securityContext: {}
+
 
 # 服务配置
 service:
@@ -63,6 +70,7 @@ service:
   port: 80
   targetPort: 80
   annotations: {}
+
 
 # 自动伸缩
 autoscale:
@@ -94,6 +102,7 @@ autoscale:
           value: 100
           periodSeconds: 15
 
+
 # 路径
 ingress:
   enabled: false
@@ -106,21 +115,25 @@ ingress:
   tls: []
   annotations: {}
 
+
 # 配置
 configmap:
   enabled: false
   data: {}
+
 
 # 加密配置
 secret:
   enabled: false
   data: {}
 
+
 # 服务账户
 serviceAccount:
   create: true
   name: ""
   annotations: {}
+
 
 # 持久化存储
 persistence:
@@ -129,6 +142,7 @@ persistence:
   size: "10Gi"
   storageClass: ""
   mountPath: "/data"
+
 
 # 副本
 pod:
@@ -139,10 +153,12 @@ pod:
   nodeSelector: {}
   tolerations: []
 
+
 pdb:
   enabled: false
   minAvailable: 1
   maxUnavailable: ""
+
 
 test: # 测试数据
   enabled: true
