@@ -1,8 +1,8 @@
-{{- if .Values.app.enabled }}
+{{- if .Values.application.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "deploy.fullname" . }}
+  name: {{ include "deploy.fullName" . }}
   labels:
     {{- include "deploy.labels" . | nindent 4 }}
   {{- with .Values.pod.annotations }}
@@ -29,7 +29,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-      {{- with .Values.image.pullSecrets }}
+      {{- with .Values.image.secrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -40,7 +40,7 @@ spec:
       containers:
         - name: {{ .Values.container.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.image.policy }}
           {{- with .Values.container.command }}
           command:
             {{- toYaml . | nindent 12 }}
@@ -89,7 +89,7 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: {{ include "deploy.fullname" . }}-pvc
+            claimName: {{ include "deploy.fullName" . }}-pvc
       {{- end }}
       {{- with .Values.pod.nodeSelector }}
       nodeSelector:

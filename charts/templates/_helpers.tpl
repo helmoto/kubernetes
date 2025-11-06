@@ -2,17 +2,17 @@
 Expand the name of the chart.
 */}}
 {{- define "deploy.name" -}}
-{{- default .Chart.Name .Values.app.name | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.application.name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create a default fully qualified app name.
 */}}
-{{- define "deploy.fullname" -}}
-{{- if .Values.app.fullnameOverride }}
-{{- .Values.app.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- define "deploy.fullName" -}}
+{{- if .Values.application.fullNameOverride }}
+{{- .Values.application.fullNameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.app.name }}
+{{- $name := default .Chart.Name .Values.application.name }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -53,7 +53,7 @@ Service account name
 */}}
 {{- define "deploy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "deploy.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "deploy.fullName" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

@@ -1,14 +1,14 @@
-app:
+application:
   name: "my-application"
-  fullnameOverride: ""
+  fullNameOverride: ""
   namespace: "default"
   enabled: true
 
 image:
   repository: "nginx"
   tag: "latest"
-  pullPolicy: "IfNotPresent"
-  pullSecrets: []
+  policy: "IfNotPresent"
+  secrets: []
 
 deployment:
   replicas: 1
@@ -20,7 +20,7 @@ deployment:
   revisionHistoryLimit: 3
 
 container:
-  name: "app"
+  name: "nginx"
   port: 80
   command: []
   args: []
