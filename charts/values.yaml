@@ -64,19 +64,22 @@ service:
   targetPort: 80
   annotations: {}
 
-hpa:
+# 自动伸缩
+autoscale:
   enabled: true
-  minReplicas: 1
-  maxReplicas: 10
+  min: 1
+  max: 10
   cpu:
     enabled: true
-    targetAverageUtilization: 80
+    target: 80
   memory:
     enabled: false
-    targetAverageUtilization: 80
+    target: 80
 
+  # 监控
   metrics: []
 
+  # 行为
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 300
@@ -91,6 +94,7 @@ hpa:
           value: 100
           periodSeconds: 15
 
+# 路径
 ingress:
   enabled: false
   className: ""
@@ -102,10 +106,12 @@ ingress:
   tls: []
   annotations: {}
 
+# 配置
 configmap:
   enabled: false
   data: {}
 
+# 加密配置
 secret:
   enabled: false
   data: {}
@@ -124,6 +130,7 @@ persistence:
   storageClass: ""
   mountPath: "/data"
 
+# 副本
 pod:
   annotations: {}
   labels: {}

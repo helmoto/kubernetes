@@ -10,7 +10,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if not .Values.hpa.enabled }}
+  {{- if not .Values.autoscale.enabled }}
   replicas: {{ .Values.deployment.replicas }}
   {{- end }}
   revisionHistoryLimit: {{ .Values.deployment.revisionHistoryLimit }}
