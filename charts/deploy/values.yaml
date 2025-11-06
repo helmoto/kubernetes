@@ -1,0 +1,143 @@
+app:
+  name: "my-application"
+  fullnameOverride: ""
+  namespace: "default"
+  enabled: true
+
+image:
+  repository: "nginx"
+  tag: "latest"
+  pullPolicy: "IfNotPresent"
+  pullSecrets: []
+
+deployment:
+  replicas: 1
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  revisionHistoryLimit: 3
+
+container:
+  name: "app"
+  port: 80
+  command: []
+  args: []
+  env: {}
+  envFrom: []
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+
+  # 健康检查
+  livenessProbe:
+    enabled: true
+    httpGet:
+      path: "/health"
+      port: 80
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+
+  readinessProbe:
+    enabled: true
+    httpGet:
+      path: "/ready"
+      port: 80
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+
+  securityContext: {}
+
+# 服务配置
+service:
+  enabled: true
+  type: "ClusterIP"
+  port: 80
+  targetPort: 80
+  annotations: {}
+
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  cpu:
+    enabled: true
+    targetAverageUtilization: 80
+  memory:
+    enabled: false
+    targetAverageUtilization: 80
+
+  metrics: []
+
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+        - type: Percent
+          value: 100
+          periodSeconds: 15
+
+ingress:
+  enabled: false
+  className: ""
+  hosts:
+    - host: "app.example.com"
+      paths:
+        - path: "/"
+          pathType: "Prefix"
+  tls: []
+  annotations: {}
+
+configmap:
+  enabled: false
+  data: {}
+
+secret:
+  enabled: false
+  data: {}
+
+# 服务账户
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+# 持久化存储
+persistence:
+  enabled: false
+  accessMode: "ReadWriteOnce"
+  size: "10Gi"
+  storageClass: ""
+  mountPath: "/data"
+
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  affinity: {}
+  nodeSelector: {}
+  tolerations: []
+
+pdb:
+  enabled: false
+  minAvailable: 1
+  maxUnavailable: ""
+
+test: # 测试数据
+  enabled: true
+  image: "busybox:latest"
+  command: ["wget", "--spider", "http://localhost:80/health"]
