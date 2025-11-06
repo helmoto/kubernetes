@@ -16,13 +16,21 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 配置
+      - name: 配置仓库
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Set up Helm
+      - name: 配置工具
         uses: azure/setup-helm@v4
+
+      - name: 编译
+        run: |
+          for chart in charts/*; do
+            if [ -f "$chart/Chart.yaml" ]; then
+              helm dependency build "$chart"
+            fi
+          done
 
       - name: 上传
         uses: helm/chart-releaser-action@v1.7.0
