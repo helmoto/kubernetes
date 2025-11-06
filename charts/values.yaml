@@ -1,6 +1,6 @@
 # 应用
 application:
-  name: "unset"
+  name: "application"
   qualifier: ""
   namespace: "default"
   enabled: true
