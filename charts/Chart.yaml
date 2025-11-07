@@ -2,7 +2,7 @@ apiVersion: v2
 name: deploy
 description: 通用的部署应用，支持动态水平扩展功能
 type: application
-version: 0.0.7
+version: 0.0.8
 appVersion: "1.0.0"
 
 dependencies: []
