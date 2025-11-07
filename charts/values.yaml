@@ -8,6 +8,7 @@ application:
 
 # 镜像
 image:
+  registry: ""
   repository: "nginx"
   tag: "latest"
   policy: "IfNotPresent"
