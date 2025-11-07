@@ -131,7 +131,7 @@ secret:
 
 # 服务账户
 serviceAccount:
-  create: true
+  create: false
   name: ""
   annotations: {}
 
