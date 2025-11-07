@@ -39,7 +39,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Values.container.name }}
-          image: "{{- if .Values.image.registry }}.Values.image.registry/{{- end }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{- if .Values.image.registry }}{{ .Values.image.registry }}/{{- end }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.policy }}
           {{- with .Values.container.command }}
           command:
