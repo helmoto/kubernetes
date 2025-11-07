@@ -82,7 +82,7 @@ autoscale:
     enabled: true
     target: 80
   memory:
-    enabled: false
+    enabled: true
     target: 80
 
   # 监控
