@@ -51,7 +51,7 @@ spec:
           {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.main.port }}
+              containerPort: {{ .Values.port }}
               protocol: TCP
           {{- with .Values.env }}
           env:
