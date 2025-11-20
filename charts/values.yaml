@@ -26,9 +26,9 @@ deployment:
   revisionHistoryLimit: 3
 
 
-# 容器
-container:
-  name: "nginx"
+# 主容器
+main:
+  name: "main"
   port: 80
   command: []
   args: []
@@ -44,8 +44,8 @@ container:
       memory: "512Mi"
 
   # 健康检查
-  livenessProbe:
-    enabled: true
+  liveness:
+    enabled: false
     httpGet:
       path: "/health"
       port: 80
@@ -53,7 +53,7 @@ container:
     periodSeconds: 10
     timeoutSeconds: 5
 
-  readinessProbe:
+  readiness:
     enabled: true
     httpGet:
       path: "/ready"

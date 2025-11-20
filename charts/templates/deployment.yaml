@@ -38,45 +38,45 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Values.container.name }}
+        - name: {{ .Values.main.name }}
           image: "{{- if .Values.image.registry }}{{ .Values.image.registry }}/{{- end }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.policy }}
-          {{- with .Values.container.command }}
+          {{- with .Values.main.command }}
           command:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.container.args }}
+          {{- with .Values.main.args }}
           args:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.container.port }}
+              containerPort: {{ .Values.main.port }}
               protocol: TCP
-          {{- with .Values.container.env }}
+          {{- with .Values.main.env }}
           env:
             {{- range $key, $value := . }}
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
           {{- end }}
-          {{- with .Values.container.envFrom }}
+          {{- with .Values.main.envFrom }}
           envFrom:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.container.resources }}
+          {{- with .Values.main.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if .Values.container.livenessProbe.enabled }}
+          {{- if .Values.main.liveness.enabled }}
           livenessProbe:
-            {{- omit .Values.container.livenessProbe "enabled" | toYaml | nindent 12 }}
+            {{- omit .Values.main.liveness "enabled" | toYaml | nindent 12 }}
           {{- end }}
-          {{- if .Values.container.readinessProbe.enabled }}
+          {{- if .Values.main.readiness.enabled }}
           readinessProbe:
-            {{- omit .Values.container.readinessProbe "enabled" | toYaml | nindent 12 }}
+            {{- omit .Values.main.readiness "enabled" | toYaml | nindent 12 }}
           {{- end }}
-          {{- with .Values.container.securityContext }}
+          {{- with .Values.main.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
