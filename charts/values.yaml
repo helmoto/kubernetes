@@ -1,3 +1,13 @@
+command: []
+args: []
+env: {}
+envFrom: []
+port: 80
+replicas: 1
+context:
+  security: {}
+
+
 # 应用
 application:
   name: "application"
@@ -17,7 +27,6 @@ image:
 
 # 部署
 deployment:
-  replicas: 1
   strategy:
     type: "RollingUpdate"
     rollingUpdate:
@@ -26,24 +35,19 @@ deployment:
   revisionHistoryLimit: 3
 
 
-# 主容器
-main:
-  name: "main"
-  port: 80
-  command: []
-  args: []
-  env: {}
-  envFrom: []
+# 资源
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
 
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "128Mi"
-    limits:
-      cpu: "500m"
-      memory: "512Mi"
 
-  # 健康检查
+
+# 健康检查
+probe:
   liveness:
     enabled: false
     httpGet:
@@ -54,15 +58,13 @@ main:
     timeoutSeconds: 5
 
   readiness:
-    enabled: true
+    enabled: false
     httpGet:
       path: "/ready"
       port: 80
     initialDelaySeconds: 5
     periodSeconds: 5
     timeoutSeconds: 3
-  securityContext: {}
-
 
 # 服务配置
 service:

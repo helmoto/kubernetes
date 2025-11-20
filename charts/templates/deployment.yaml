@@ -11,7 +11,7 @@ metadata:
   {{- end }}
 spec:
   {{- if not .Values.autoscale.enabled }}
-  replicas: {{ .Values.deployment.replicas }}
+  replicas: {{ .Values.replicas }}
   {{- end }}
   revisionHistoryLimit: {{ .Values.deployment.revisionHistoryLimit }}
   selector:
@@ -38,14 +38,14 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: {{ .Values.main.name }}
+        - name: {{ .Values.application.name }}
           image: "{{- if .Values.image.registry }}{{ .Values.image.registry }}/{{- end }}{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.policy }}
-          {{- with .Values.main.command }}
+          {{- with .Values.command }}
           command:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.main.args }}
+          {{- with .Values.args }}
           args:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -53,28 +53,28 @@ spec:
             - name: http
               containerPort: {{ .Values.main.port }}
               protocol: TCP
-          {{- with .Values.main.env }}
+          {{- with .Values.env }}
           env:
             {{- range $key, $value := . }}
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
           {{- end }}
-          {{- with .Values.main.envFrom }}
+          {{- with .Values.envFrom }}
           envFrom:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.main.resources }}
+          {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if .Values.main.liveness.enabled }}
+          {{- if .Values.probe.liveness.enabled }}
           livenessProbe:
-            {{- omit .Values.main.liveness "enabled" | toYaml | nindent 12 }}
+            {{- omit .Values.probe.liveness "enabled" | toYaml | nindent 12 }}
           {{- end }}
-          {{- if .Values.main.readiness.enabled }}
+          {{- if .Values.probe.readiness.enabled }}
           readinessProbe:
-            {{- omit .Values.main.readiness "enabled" | toYaml | nindent 12 }}
+            {{- omit .Values.probe.readiness "enabled" | toYaml | nindent 12 }}
           {{- end }}
           {{- with .Values.main.securityContext }}
           securityContext:
