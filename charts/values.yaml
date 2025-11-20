@@ -69,7 +69,7 @@ service:
   targetPort: 80
   annotations: {}
   account: # 服务账户
-    create: false
+    enabled: false
     name: ""
     annotations: { }
 

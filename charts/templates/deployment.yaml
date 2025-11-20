@@ -103,8 +103,8 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.serviceAccount.create }}
-      serviceAccountName: {{ include "deploy.serviceAccountName" . }}
+      {{- if .Values.service.account.enabled }}
+      serviceAccountName: {{ include "deploy.service.account.name" . }}
       {{- end }}
   {{- with .Values.deployment.strategy }}
   strategy:

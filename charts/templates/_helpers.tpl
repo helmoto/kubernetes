@@ -56,8 +56,8 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 账号
 */}}
-{{- define "service.account.name" -}}
-{{- if .Values.service.account.create }}
+{{- define "deploy.service.account.name" -}}
+{{- if .Values.service.account.enabled }}
 {{- default (include "qualifier" .) .Values.service.account.name }}
 {{- else }}
 {{- default "default" .Values.service.account.name }}
