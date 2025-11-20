@@ -76,7 +76,7 @@ spec:
           readinessProbe:
             {{- omit .Values.probe.readiness "enabled" | toYaml | nindent 12 }}
           {{- end }}
-          {{- with .Values.main.securityContext }}
+          {{- with .Values.context.security }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
