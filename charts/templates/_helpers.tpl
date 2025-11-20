@@ -2,7 +2,7 @@
 名称
 */}}
 {{- define "deploy.name" -}}
-{{- default .Chart.Name .Values.application.name | trunc 63 | trimSuffix "-" }}
+{{- default .Chart.Name .Values.name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 
@@ -10,10 +10,10 @@
 全称
 */}}
 {{- define "deploy.qualifier" -}}
-{{- if .Values.application.qualifier }}
-{{- .Values.application.qualifier | trunc 63 | trimSuffix "-" }}
+{{- if .Values.qualifier }}
+{{- .Values.qualifier | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- $name := default .Chart.Name .Values.application.name }}
+{{- $name := default .Chart.Name .Values.name }}
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -56,10 +56,10 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 账号
 */}}
-{{- define "deploy.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "deploy.qualifier" .) .Values.serviceAccount.name }}
+{{- define "deploy.service.account.name" -}}
+{{- if .Values.service.account.create }}
+{{- default (include "deploy.qualifier" .) .Values.service.account.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- default "default" .Values.service.account.name }}
 {{- end }}
 {{- end }}

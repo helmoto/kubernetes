@@ -1,3 +1,7 @@
+enabled: true # 是否开启，在不开启的情况下，不会部署
+name: "mian" # 容器名字
+qualifier: ""
+namespace: "default"
 command: []
 args: []
 env: {}
@@ -6,14 +10,6 @@ port: 80
 replicas: 1
 context:
   security: {}
-
-
-# 应用
-application:
-  name: "application"
-  qualifier: ""
-  namespace: "default"
-  enabled: true
 
 
 # 镜像
@@ -56,7 +52,6 @@ probe:
     initialDelaySeconds: 30
     periodSeconds: 10
     timeoutSeconds: 5
-
   readiness:
     enabled: false
     httpGet:
@@ -73,6 +68,10 @@ service:
   port: 80
   targetPort: 80
   annotations: {}
+  account: # 服务账户
+    create: false
+    name: ""
+    annotations: { }
 
 
 # 自动伸缩
@@ -129,13 +128,6 @@ configmap:
 secret:
   enabled: false
   data: {}
-
-
-# 服务账户
-serviceAccount:
-  create: false
-  name: ""
-  annotations: {}
 
 
 # 持久化存储
